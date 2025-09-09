@@ -1,0 +1,77 @@
+vidadi@Vidadis-MacBook-Pro ~ % psql -U vidadi -d mydb -h localhost -p 5432
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+Type "help" for help.
+
+mydb=# CREATE TABLE students (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    faculty VARCHAR(100)
+);
+CREATE TABLE
+mydb=# INSERT INTO students (name, email, faculty) VALUES ('Vidadi', 'fv12379@auca.kg', 'COM-25'), ('Oleg', 'zo12385@auca.kg', 'COM-25'), ('Dmitrii', 'gd12264@auca.kg', 'COM-43');
+INSERT 0 3
+mydb=# SELECT name, email FROM students WHERE faculty = 'COM-25';
+  name  |      email      
+--------+-----------------
+ Vidadi | fv12379@auca.kg
+ Oleg   | zo12385@auca.kg
+(2 rows)
+
+mydb=# SELECT name, email FROM students;
+  name   |      email      
+---------+-----------------
+ Vidadi  | fv12379@auca.kg
+ Oleg    | zo12385@auca.kg
+ Dmitrii | gd12264@auca.kg
+(3 rows)
+
+mydb=# SELECT * FROM students;
+ id |  name   |      email      | faculty 
+----+---------+-----------------+---------
+  1 | Vidadi  | fv12379@auca.kg | COM-25
+  2 | Oleg    | zo12385@auca.kg | COM-25
+  3 | Dmitrii | gd12264@auca.kg | COM-43
+(3 rows)
+
+mydb=# SELECT id, faculty FROM students;
+ id | faculty 
+----+---------
+  1 | COM-25
+  2 | COM-25
+  3 | COM-43
+(3 rows)
+
+mydb=# SELECT name, email FROM students WHERE name = 'Oleg';
+ name |      email      
+------+-----------------
+ Oleg | zo12385@auca.kg
+(1 row)
+
+mydb=# SELECT name, email FROM students ORDER BY name, email;
+  name   |      email      
+---------+-----------------
+ Dmitrii | gd12264@auca.kg
+ Oleg    | zo12385@auca.kg
+ Vidadi  | fv12379@auca.kg
+(3 rows)
+
+mydb=# SELECT name, email FROM students LIMIT 2;
+  name  |      email      
+--------+-----------------
+ Vidadi | fv12379@auca.kg
+ Oleg   | zo12385@auca.kg
+(2 rows)
+
+mydb=# -- This query retrieves all students from the Engineering faculty.
+SELECT name, faculty FROM students WHERE faculty = 'COM-25';
+
+/* This is a multi-line comment.
+It can span multiple lines for detailed explanations. */
+  name  | faculty 
+--------+---------
+ Vidadi | COM-25
+ Oleg   | COM-25
+(2 rows)
+
+mydb-# \q
