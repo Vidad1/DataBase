@@ -1,0 +1,40 @@
+vidadi@Vidadis-MacBook-Pro ~ % psql -U vidadi -d mydb -h localhost -p 5432
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+Type "help" for help.
+
+mydb=# \l
+                                         List of databases
+   Name    | Owner  | Encoding | Collate | Ctype | ICU Locale | Locale Provider | Access privileges 
+-----------+--------+----------+---------+-------+------------+-----------------+-------------------
+ mydb      | vidadi | UTF8     | C       | C     |            | libc            | 
+ postgres  | vidadi | UTF8     | C       | C     |            | libc            | 
+ template0 | vidadi | UTF8     | C       | C     |            | libc            | =c/vidadi        +
+           |        |          |         |       |            |                 | vidadi=CTc/vidadi
+ template1 | vidadi | UTF8     | C       | C     |            | libc            | =c/vidadi        +
+           |        |          |         |       |            |                 | vidadi=CTc/vidadi
+(4 rows)
+
+mydb=# CREATE DATABASE university;
+CREATE DATABASE
+mydb=# \l
+                                          List of databases
+    Name    | Owner  | Encoding | Collate | Ctype | ICU Locale | Locale Provider | Access privileges 
+------------+--------+----------+---------+-------+------------+-----------------+-------------------
+ mydb       | vidadi | UTF8     | C       | C     |            | libc            | 
+ postgres   | vidadi | UTF8     | C       | C     |            | libc            | 
+ template0  | vidadi | UTF8     | C       | C     |            | libc            | =c/vidadi        +
+            |        |          |         |       |            |                 | vidadi=CTc/vidadi
+ template1  | vidadi | UTF8     | C       | C     |            | libc            | =c/vidadi        +
+            |        |          |         |       |            |                 | vidadi=CTc/vidadi
+ university | vidadi | UTF8     | C       | C     |            | libc            | 
+(5 rows)
+
+mydb-# \c university
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+You are now connected to database "university" as user "vidadi".
+university-# \c mydb
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+You are now connected to database "mydb" as user "vidadi"
+mydb=# DROP DATABASE university;
+DROP DATABASE
+mydb=# \q
