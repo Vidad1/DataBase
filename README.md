@@ -1,4 +1,4 @@
-Labs 1-3
+Labs 1-4
 
 
 - Lab 1: Basic psql Commands
