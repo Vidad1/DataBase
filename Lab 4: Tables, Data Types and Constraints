@@ -1,0 +1,52 @@
+vidadi@Vidadis-MacBook-Pro ~ % psql -U vidadi -d mydb -h localhost -p 5432
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+Type "help" for help.
+
+mydb=# DROP TABLE students;
+DROP TABLE
+mydb=# CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    faculty VARCHAR(100)
+);
+CREATE TABLE
+mydb=# DROP TABLE test_table;
+ERROR:  table "test_table" does not exist
+mydb=# DROP TABLE IF EXISTS test_table;
+NOTICE:  table "test_table" does not exist, skipping
+DROP TABLE
+mydb=# ALTER TABLE students
+mydb-# ADD COLUMN date_of_birth DATE;
+ALTER TABLE
+mydb=# ALTER TABLE students
+mydb-# DROP COLUMN faculty;
+ALTER TABLE
+mydb=# ALTER TABLE students
+mydb-# ALTER COLUMN first_name TYPE TEXT;
+ALTER TABLE
+mydb=# ALTER TABLE students
+mydb-# ADD CONSTRAINT unique_student_email UNIQUE (email);
+ALTER TABLE
+mydb=# ALTER TABLE students
+mydb-# RENAME COLUMN email TO email_adress;
+ALTER TABLE
+mydb=# ALTER TABLE students
+mydb-# RENAME TO university_students;
+ALTER TABLE
+mydb=# \d university_students
+                                      Table "public.university_students"
+    Column     |          Type          | Collation | Nullable |                   Default                    
+---------------+------------------------+-----------+----------+----------------------------------------------
+ student_id    | integer                |           | not null | nextval('students_student_id_seq'::regclass)
+ first_name    | text                   |           | not null | 
+ last_name     | character varying(50)  |           | not null | 
+ email_adress  | character varying(100) |           | not null | 
+ date_of_birth | date                   |           |          | 
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (student_id)
+    "students_email_key" UNIQUE CONSTRAINT, btree (email_adress)
+    "unique_student_email" UNIQUE CONSTRAINT, btree (email_adress)
+
+mydb=# \q
