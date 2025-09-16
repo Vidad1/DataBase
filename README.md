@@ -11,5 +11,7 @@ Labs 1-5
 
 - Lab 5: Primary Keys
 
+- Lab 6: Foreign Keys and Relationships
+
 
 Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
