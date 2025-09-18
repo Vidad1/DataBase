@@ -1,0 +1,95 @@
+vidadi@Vidadis-MacBook-Pro ~ % psql -U vidadi -d mydb -h localhost -p 5432
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+Type "help" for help.
+
+mydb=# CREATE TABLE students (
+mydb(# student_id INT PRIMARY KEY,
+mydb(# name VARCHAR(100)
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE student_phones (
+mydb(# student_id INT,
+mydb(# phone_number VARCHAR(15),
+mydb(# phone_type VARCHAR(20),
+mydb(# PRIMARY KEY (student_id, phone_number),
+mydb(# FOREIGN KEY (student_id) REFERENCES students(student_id)
+mydb(# );
+CREATE TABLE
+mydb=# DROP TABLE student_phones;
+DROP TABLE
+mydb=# CREATE TABLE courses (
+mydb(# course_id INT PRIMARY KEY,
+mydb(# course_name VARCHAR(100),
+mydb(# credits INT
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE enrollments (
+mydb(# student_id INT,
+mydb(# course_id INT,
+mydb(# grade CHAR(2),
+mydb(# PRIMARY KEY (student_id, course_id),
+mydb(# FOREIGN KEY (student_id) REFERENCES students(student_id),
+mydb(# FOREIGN KEY (course_id) REFERENCES courses(course_id)
+mydb(# );
+CREATE TABLE
+mydb=# DROP TABLE courses, students, enrollments;
+DROP TABLE
+mydb=# CREATE TABLE departments (
+mydb(# department_id INT PRIMARY KEY,
+mydb(# department_name VARCHAR(100),
+mydb(# department_head VARCHAR(100)
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE students (
+mydb(# student_id INT PRIMARY KEY,
+mydb(# name VARCHAR(100),
+mydb(# department_id INT,
+mydb(# FOREIGN KEY (department_id) REFERENCES departments(department_id)
+mydb(# );
+CREATE TABLE
+mydb=# DROP TABLE students, departments;
+DROP TABLE
+mydb=# CREATE TABLE authors (
+mydb(# author_id SERIAL PRIMARY KEY,
+mydb(# first_name VARCHAR(50) NOT NULL,
+mydb(# last_name VARCHAR(50) NOT NULL,
+mydb(# birth_date DATE
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE books (
+mydb(# book_id SERIAL PRIMARY KEY,
+mydb(# title VARCHAR(200) NOT NULL,
+mydb(# isbn VARCHAR(13) UNIQUE,
+mydb(# publication_year INTEGER,
+mydb(# available_copies INTEGER DEFAULT 1
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE book_authors (
+mydb(# book_id INTEGER,
+mydb(# author_id INTEGER,
+mydb(# PRIMARY KEY (book_id, author_id),
+mydb(# FOREIGN KEY (book_id) REFERENCES books(book_id),
+mydb(# FOREIGN KEY (author_id) REFERENCES authors(author_id)
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE members (
+mydb(# member_id SERIAL PRIMARY KEY,
+mydb(# first_name VARCHAR(50) NOT NULL,
+mydb(# last_name VARCHAR(50) NOT NULL,
+mydb(# email VARCHAR(100) UNIQUE NOT NULL,
+mydb(# phone VARCHAR(15),
+mydb(# membership_date DATE DEFAULT CURRENT_DATE
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE loans (
+mydb(# loan_id SERIAL PRIMARY KEY,
+mydb(# member_id INTEGER NOT NULL,
+mydb(# book_id INTEGER NOT NULL,
+mydb(# loan_date DATE DEFAULT CURRENT_DATE,
+mydb(# due_date DATE NOT NULL,
+mydb(# return_date DATE,
+mydb(# late_fee DECIMAL(10,2) DEFAULT 0.00,
+mydb(# FOREIGN KEY (member_id) REFERENCES members(member_id),
+mydb(# FOREIGN KEY (book_id) REFERENCES books(book_id)
+mydb(# );
+CREATE TABLE
