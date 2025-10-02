@@ -1,4 +1,4 @@
-Labs 1-5
+Labs 1-9
 
 
 - Lab 1: Basic psql Commands
@@ -12,6 +12,12 @@ Labs 1-5
 - Lab 5: Primary Keys
 
 - Lab 6: Foreign Keys and Relationships
+  
+- Lab 7: Database Design Basics
+
+- Lab 8: Viewing Database and Table Structure
+
+- Lab 9: Basic Data Operations
 
 
 Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
