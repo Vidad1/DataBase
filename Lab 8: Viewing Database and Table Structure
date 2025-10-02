@@ -1,0 +1,29 @@
+vidadi@Vidadis-MacBook-Pro ~ % psql -U vidadi -d mydb -h localhost -p 5432
+psql (15.14 (Homebrew), server 15.13 (Homebrew))
+Type "help" for help.
+
+mydb=# \dt
+           List of relations
+ Schema |     Name     | Type  | Owner  
+--------+--------------+-------+--------
+ public | authors      | table | vidadi
+ public | book_authors | table | vidadi
+ public | books        | table | vidadi
+ public | loans        | table | vidadi
+ public | members      | table | vidadi
+(5 rows)
+
+mydb=# \d
+                 List of relations
+ Schema |         Name          |   Type   | Owner  
+--------+-----------------------+----------+--------
+ public | authors               | table    | vidadi
+ public | authors_author_id_seq | sequence | vidadi
+ public | book_authors          | table    | vidadi
+ public | books                 | table    | vidadi
+ public | books_book_id_seq     | sequence | vidadi
+ public | loans                 | table    | vidadi
+ public | loans_loan_id_seq     | sequence | vidadi
+ public | members               | table    | vidadi
+ public | members_member_id_seq | sequence | vidadi
+(9 rows)
