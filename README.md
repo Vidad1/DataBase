@@ -1,4 +1,4 @@
-Labs 1-9
+Labs 1-11
 
 
 - Lab 1: Basic psql Commands
@@ -20,6 +20,8 @@ Labs 1-9
 - Lab 9: Basic Data Operations
 
 - Lab 10: Querying Data
+
+- Lab 11: Aggregate Functions
 
 
 Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
