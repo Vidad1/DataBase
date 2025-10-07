@@ -19,5 +19,7 @@ Labs 1-9
 
 - Lab 9: Basic Data Operations
 
+- Lab 10: Querying Data
+
 
 Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
