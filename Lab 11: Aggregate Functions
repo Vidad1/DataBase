@@ -1,0 +1,286 @@
+mydb=# SELECT COUNT(*) AS total_employees
+mydb-# FROM employees;
+ total_employees 
+-----------------
+               7
+(1 row)
+
+mydb=# SELECT COUNT(email) AS employees_with_email
+mydb-# FROM employees;
+ employees_with_email 
+----------------------
+                    5
+(1 row)
+
+mydb=# SELECT COUNT(DISTINCT department) AS unique_departments
+mydb-# FROM employees;
+ unique_departments 
+--------------------
+                  3
+(1 row)
+
+mydb=# SELECT SUM(salary) AS total_salaries
+mydb-# FROM employees;
+ total_salaries 
+----------------
+      523000.00
+(1 row)
+
+mydb=# SELECT employee_id, SUM(amount) AS total_sales
+mydb-# FROM sales
+mydb-# GROUP BY employee_id;
+ employee_id | total_sales 
+-------------+-------------
+           3 |     3000.00
+           5 |      500.00
+           4 |     2000.00
+           2 |     2500.00
+           1 |     3500.00
+(5 rows)
+
+mydb=# SELECT AVG(salary) AS average_salary
+mydb-# FROM employees;
+   average_salary   
+--------------------
+ 74714.285714285714
+(1 row)
+
+mydb=# SELECT department, AVG(salary) AS avg_salary
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  |     avg_salary      
+-------------+---------------------
+ Engineering | 101000.000000000000
+ Sales       |  60000.000000000000
+ HR          |  50000.000000000000
+(3 rows)
+
+mydb=# SELECT
+mydb-# MAX(salary) AS highest_salary,
+mydb-# MIN(salary) AS lowest_salary
+mydb-# FROM employees;
+ highest_salary | lowest_salary 
+----------------+---------------
+      120000.00 |      40000.00
+(1 row)
+
+mydb=# SELECT department, MAX(hire_date) AS latest_hire
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  | latest_hire 
+-------------+-------------
+ Engineering | 2022-05-01
+ Sales       | 2024-01-20
+ HR          | 2024-04-05
+(3 rows)
+
+mydb=# SELECT department, STRING_AGG(first_name, ', ') AS employee_names
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  |  employee_names   
+-------------+-------------------
+ Engineering | Alice, Bob, Grace
+ Sales       | Carol, David
+ HR          | Eve, Frank
+(3 rows)
+
+mydb=# SELECT employee_id, STRING_AGG(skill_name, ', ' ORDER BY skill_name) AS skills
+mydb-# FROM employee_skills
+mydb-# GROUP BY employee_id;
+ employee_id |         skills          
+-------------+-------------------------
+           1 | AI, Python, SQL
+           2 | C++, SQL
+           3 | Negotiation, Salesforce
+           5 | Recruiting, Training
+(4 rows)
+
+mydb=# SELECT department, ARRAY_AGG(salary) AS salary_array
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  |         salary_array          
+-------------+-------------------------------
+ Engineering | {95000.00,120000.00,88000.00}
+ Sales       | {70000.00,50000.00}
+ HR          | {60000.00,40000.00}
+(3 rows)
+
+mydb=# SELECT
+mydb-# department,
+mydb-# STDDEV(salary) AS salary_std_dev,
+mydb-# VARIANCE(salary) AS salary_variance
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  | salary_std_dev |  salary_variance   
+-------------+----------------+--------------------
+ Engineering | 16822.60384126 | 283000000.00000000
+ Sales       | 14142.13562373 | 200000000.00000000
+ HR          | 14142.13562373 | 200000000.00000000
+(3 rows)
+
+mydb=# SELECT
+mydb-# category,
+mydb-# COUNT(*) AS number_of_products,
+mydb-# SUM(price) AS total_value,
+mydb-# AVG(price) AS average_price
+mydb-# FROM products
+mydb-# GROUP BY category;
+  category   | number_of_products | total_value |    average_price     
+-------------+--------------------+-------------+----------------------
+ Electronics |                  2 |     1900.00 | 950.0000000000000000
+ Clothing    |                  2 |       75.00 |  37.5000000000000000
+ Fruit       |                  3 |      110.00 |  36.6666666666666667
+(3 rows)
+
+mydb=# SELECT
+mydb-# EXTRACT(YEAR FROM sale_date) AS year,
+mydb-# EXTRACT(QUARTER FROM sale_date) AS quarter,
+mydb-# COUNT(*) AS total_sales,
+mydb-# SUM(amount) AS total_revenue
+mydb-# FROM sales
+mydb-# GROUP BY EXTRACT(YEAR FROM sale_date), EXTRACT(QUARTER FROM sale_date)
+mydb-# ORDER BY year, quarter;
+ year | quarter | total_sales | total_revenue 
+------+---------+-------------+---------------
+ 2024 |       2 |           4 |       6500.00
+ 2024 |       3 |           3 |       5000.00
+(2 rows)
+
+mydb=# SELECT 
+mydb-# CASE 
+mydb-# WHEN age < 30 THEN 'Under 30'
+mydb-# WHEN age BETWEEN 30 AND 50 THEN '30-50'
+mydb-# ELSE 'Over 50'
+mydb-# END AS age_group,
+mydb-# COUNT(*) AS employee_count,
+mydb-# AVG(salary) AS avg_salary
+mydb-# FROM employees
+mydb-# GROUP BY 
+mydb-# CASE 
+mydb-# WHEN age < 30 THEN 'Under 30'
+mydb-# WHEN age BETWEEN 30 AND 50 THEN '30-50'
+mydb-# ELSE 'Over 50'
+mydb-# END;
+ age_group | employee_count |     avg_salary     
+-----------+----------------+--------------------
+ Under 30  |              2 | 67500.000000000000
+ Over 50   |              1 | 60000.000000000000
+ 30-50     |              4 | 82000.000000000000
+(3 rows)
+
+mydb=# SELECT 
+mydb-# department,
+mydb-# COUNT(*) AS employee_count
+mydb-# FROM employees
+mydb-# GROUP BY department
+mydb-# HAVING COUNT(*) > 2;
+ department  | employee_count 
+-------------+----------------
+ Engineering |              3
+(1 row)
+
+mydb=# SELECT 
+mydb-# product_id,
+mydb-# AVG(rating) AS avg_rating,
+mydb-# COUNT(*) AS review_count
+mydb-# FROM product_reviews
+mydb-# GROUP BY product_id
+mydb-# HAVING AVG(rating) > 4.0 AND COUNT(*) >= 2;
+ product_id |     avg_rating     | review_count 
+------------+--------------------+--------------
+          4 | 4.8000000000000000 |            2
+          1 | 4.2500000000000000 |            2
+(2 rows)
+
+mydb=# SELECT department, AVG(salary) AS dept_avg_salary
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  |   dept_avg_salary   
+-------------+---------------------
+ Engineering | 101000.000000000000
+ Sales       |  60000.000000000000
+ HR          |  50000.000000000000
+(3 rows)
+
+mydb=# SELECT 
+mydb-# id,
+mydb-# first_name,
+mydb-# department,
+mydb-# salary,
+mydb-# AVG(salary) OVER (PARTITION BY department) AS dept_avg_salary
+mydb-# FROM employees;
+ id | first_name | department  |  salary   |   dept_avg_salary   
+----+------------+-------------+-----------+---------------------
+  7 | Grace      | Engineering |  88000.00 | 101000.000000000000
+  2 | Bob        | Engineering | 120000.00 | 101000.000000000000
+  1 | Alice      | Engineering |  95000.00 | 101000.000000000000
+  6 | Frank      | HR          |  40000.00 |  50000.000000000000
+  5 | Eve        | HR          |  60000.00 |  50000.000000000000
+  4 | David      | Sales       |  50000.00 |  60000.000000000000
+  3 | Carol      | Sales       |  70000.00 |  60000.000000000000
+(7 rows)
+
+mydb=# SELECT 
+mydb-# COUNT(*) AS total_rows,
+mydb-# COUNT(email) AS non_null_emails,
+mydb-# COUNT(*) - COUNT(email) AS null_emails
+mydb-# FROM employees;
+ total_rows | non_null_emails | null_emails 
+------------+-----------------+-------------
+          7 |               5 |           2
+(1 row)
+
+mydb=# SELECT 
+mydb-# SUM(bonus) AS total_bonus,
+mydb-# AVG(bonus) AS avg_bonus,
+mydb-# COUNT(bonus) AS employees_with_bonus
+mydb-# FROM employees;
+ total_bonus |       avg_bonus       | employees_with_bonus 
+-------------+-----------------------+----------------------
+    14000.00 | 3500.0000000000000000 |                    4
+(1 row)
+
+mydb=# SELECT 
+mydb-# department,
+mydb-# COUNT(*) AS employee_count,
+mydb-# MIN(salary) AS min_salary,
+mydb-# MAX(salary) AS max_salary,
+mydb-# AVG(salary) AS avg_salary,
+mydb-# STDDEV(salary) AS salary_std_dev
+mydb-# FROM employees
+mydb-# GROUP BY department
+mydb-# ORDER BY avg_salary DESC;
+ department  | employee_count | min_salary | max_salary |     avg_salary      | salary_std_dev 
+-------------+----------------+------------+------------+---------------------+----------------
+ Engineering |              3 |   88000.00 |  120000.00 | 101000.000000000000 | 16822.60384126
+ Sales       |              2 |   50000.00 |   70000.00 |  60000.000000000000 | 14142.13562373
+ HR          |              2 |   40000.00 |   60000.00 |  50000.000000000000 | 14142.13562373
+(3 rows)
+
+mydb=# SELECT 
+mydb-# department,
+mydb-# COUNT(*) AS total_employees,
+mydb-# COUNT(CASE WHEN salary > 50000 THEN 1 END) AS high_earners,
+mydb-# COUNT(CASE WHEN hire_date > '2023-01-01' THEN 1 END) AS recent_hires
+mydb-# FROM employees
+mydb-# GROUP BY department;
+ department  | total_employees | high_earners | recent_hires 
+-------------+-----------------+--------------+--------------
+ Engineering |               3 |            3 |            0
+ Sales       |               2 |            1 |            1
+ HR          |               2 |            1 |            1
+(3 rows)
+
+mydb=# SELECT 
+mydb-# department,
+mydb-# COUNT(*) AS dept_count,
+mydb-# COUNT(*)::FLOAT / (SELECT COUNT(*) FROM employees) * 100 AS percentage
+mydb-# FROM employees
+mydb-# GROUP BY department
+mydb-# ORDER BY percentage DESC;
+ department  | dept_count |     percentage     
+-------------+------------+--------------------
+ Engineering |          3 | 42.857142857142854
+ Sales       |          2 |  28.57142857142857
+ HR          |          2 |  28.57142857142857
+(3 rows)
