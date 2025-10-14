@@ -23,5 +23,13 @@ Labs 1-11
 
 - Lab 11: Aggregate Functions
 
+- Lab 12: Joining Tables
+
+- Lab 13: Advanced Querying
+
+- Lab 14: Transactions and ACID properties
+
+- Lab 15: Data Import_Export and Backup
+
 
 Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
