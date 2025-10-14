@@ -1,0 +1,144 @@
+vidadi@Vidadis-MacBook-Pro ~ % psql -U vidadi -d mydb -h localhost -p 5432
+psql (15.14 (Homebrew))
+Type "help" for help.
+
+mydb=# CREATE TABLE customers (
+mydb(#     customer_id SERIAL PRIMARY KEY,
+mydb(#     name VARCHAR(100),
+mydb(#     email VARCHAR(100)
+mydb(# );
+CREATE TABLE
+mydb=# CREATE TABLE orders (
+mydb(#     order_id SERIAL PRIMARY KEY,
+mydb(#     customer_id INTEGER REFERENCES customers(customer_id) ON DELETE CASCADE,
+mydb(#     order_date DATE,
+mydb(#     total_amount DECIMAL(10,2)
+mydb(# );
+CREATE TABLE
+mydb=# INSERT INTO customers (name, email) VALUES
+mydb-# ('Alice Johnson', 'alice@email.com'),
+mydb-# ('Bob Smith', 'bob@email.com'),
+mydb-# ('Charlie Brown', 'charlie@email.com'),
+mydb-# ('Diana Lee', 'diana@email.com');
+INSERT 0 4
+mydb=# INSERT INTO orders (customer_id, order_date, total_amount) VALUES
+mydb-# (1, '2025-01-10', 120.50),
+mydb-# (1, '2025-03-14', 250.00),
+mydb-# (2, '2025-02-20', 75.00),
+mydb-# (4, '2025-04-05', 320.00);
+INSERT 0 4
+mydb=# SELECT c.name, c.email, o.order_date, o.total_amount
+mydb-# FROM customers c
+mydb-# INNER JOIN orders o ON c.customer_id = o.customer_id;
+        name        |       email       | order_date | total_amount
+---------------------+------------------+-------------+--------------
+ Alice Johnson       | alice@email.com  | 2025-01-10  |       120.50
+ Alice Johnson       | alice@email.com  | 2025-03-14  |       250.00
+ Bob Smith           | bob@email.com    | 2025-02-20  |        75.00
+ Diana Lee           | diana@email.com  | 2025-04-05  |       320.00
+(4 rows)
+
+mydb=# SELECT c.name, c.email, o.order_date, o.total_amount
+mydb-# FROM customers c
+mydb-# LEFT JOIN orders o ON c.customer_id = o.customer_id;
+        name        |       email       | order_date | total_amount
+---------------------+------------------+-------------+--------------
+ Alice Johnson       | alice@email.com  | 2025-01-10  |       120.50
+ Alice Johnson       | alice@email.com  | 2025-03-14  |       250.00
+ Bob Smith           | bob@email.com    | 2025-02-20  |        75.00
+ Charlie Brown       | charlie@email.com|             |             
+ Diana Lee           | diana@email.com  | 2025-04-05  |       320.00
+(5 rows)
+
+mydb=# SELECT c.name, c.email, o.order_date, o.total_amount
+mydb-# FROM customers c
+mydb-# RIGHT JOIN orders o ON c.customer_id = o.customer_id;
+        name        |       email       | order_date | total_amount
+---------------------+------------------+-------------+--------------
+ Alice Johnson       | alice@email.com  | 2025-01-10  |       120.50
+ Alice Johnson       | alice@email.com  | 2025-03-14  |       250.00
+ Bob Smith           | bob@email.com    | 2025-02-20  |        75.00
+ Diana Lee           | diana@email.com  | 2025-04-05  |       320.00
+(4 rows)
+
+mydb=# SELECT c.name, c.email, o.order_date, o.total_amount
+mydb-# FROM customers c
+mydb-# FULL OUTER JOIN orders o ON c.customer_id = o.customer_id;
+        name        |       email       | order_date | total_amount
+---------------------+------------------+-------------+--------------
+ Alice Johnson       | alice@email.com  | 2025-01-10  |       120.50
+ Alice Johnson       | alice@email.com  | 2025-03-14  |       250.00
+ Bob Smith           | bob@email.com    | 2025-02-20  |        75.00
+ Charlie Brown       | charlie@email.com|             |             
+ Diana Lee           | diana@email.com  | 2025-04-05  |       320.00
+(5 rows)
+
+mydb=# SELECT c.name, o.order_date
+mydb-# FROM customers c
+mydb-# CROSS JOIN orders o;
+ name          |  order_date
+----------------+-------------
+ Alice Johnson  | 2025-01-10
+ Alice Johnson  | 2025-03-14
+ Alice Johnson  | 2025-02-20
+ Alice Johnson  | 2025-04-05
+ Bob Smith      | 2025-01-10
+ ... (total 16 rows)
+
+mydb=# DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE
+mydb=# CREATE TABLE products (
+mydb(#     product_id SERIAL PRIMARY KEY,
+mydb(#     product_name VARCHAR(100),
+mydb(#     price DECIMAL(10,2)
+mydb(# );
+CREATE TABLE
+mydb=# INSERT INTO products (product_name, price) VALUES
+mydb-# ('Laptop', 1200.00),
+mydb-# ('Headphones', 150.00),
+mydb-# ('Mouse', 30.00);
+INSERT 0 3
+mydb=# SELECT c.name, p.product_name
+mydb-# FROM customers c
+mydb-# CROSS JOIN products p;
+      name       | product_name
+-----------------+--------------
+ Alice Johnson   | Laptop
+ Alice Johnson   | Headphones
+ Alice Johnson   | Mouse
+ Bob Smith       | Laptop
+ ... (12 rows)
+
+mydb=# DROP TABLE IF EXISTS employees CASCADE;
+DROP TABLE
+mydb=# CREATE TABLE employees (
+mydb(#     employee_id SERIAL PRIMARY KEY,
+mydb(#     name VARCHAR(100),
+mydb(#     manager_id INTEGER REFERENCES employees(employee_id)
+mydb(# );
+CREATE TABLE
+mydb=# INSERT INTO employees (name, manager_id) VALUES
+mydb-# ('John', NULL),
+mydb-# ('Sarah', 1),
+mydb-# ('Michael', 1),
+mydb-# ('Emily', 2);
+INSERT 0 4
+mydb=# SELECT e1.name AS employee, e2.name AS manager
+mydb-# FROM employees e1
+mydb-# LEFT JOIN employees e2 ON e1.manager_id = e2.employee_id;
+ employee | manager
+----------+---------
+ John     | 
+ Sarah    | John
+ Michael  | John
+ Emily    | Sarah
+(4 rows)
+
+mydb=# SELECT c.name
+mydb-# FROM customers c
+mydb-# LEFT JOIN orders o ON c.customer_id = o.customer_id
+mydb-# WHERE o.customer_id IS NULL;
+     name     
+---------------
+ Charlie Brown
+(1 row)
