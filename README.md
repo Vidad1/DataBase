@@ -20,7 +20,7 @@ Labs 1-15
 
 This repository contains completed laboratory works for the Database course at AUCA. Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
 
-## Final Project: Smart Parking Management System
+## Final Project: Emergency Incident Reporting & Analytics System
 
 I take full responsibility for meeting all project deadlines and vow to stand by them. The implementation of the final project will be carried out in this same repository.
 
