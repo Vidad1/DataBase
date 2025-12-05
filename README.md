@@ -20,9 +20,11 @@ Labs 1-15
 
 This repository contains completed laboratory works for the Database course at AUCA. Those labs are represented in .txt format which is just a copy of the stuff from the terminal.
 
-## Final Project: Emergency Incident Reporting & Analytics System
+## Final Project: AUCA Dorm Management System
 
-I take full responsibility for meeting all project deadlines and vow to stand by them. The implementation of the final project will be carried out in this same repository.
+I take full responsibility for meeting all project deadlines and vow to stand by them. The implementation of the final project will be carried out in my teammate's repository.
+
+Final project: https://github.com/Alisina10/database.git
 
 
 
