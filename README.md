@@ -26,6 +26,6 @@ I take full responsibility for meeting all project deadlines and vow to stand by
 
 Final project is in my groupmate's repository: https://github.com/Alisina10/database.git
 
-Video presentation of final project in this repository. 
+Video presentation of final project is in this repository. 
 
 
