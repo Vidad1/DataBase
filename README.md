@@ -24,7 +24,8 @@ This repository contains completed laboratory works for the Database course at A
 
 I take full responsibility for meeting all project deadlines and vow to stand by them. The implementation of the final project will be carried out in my teammate's repository.
 
-Final project: https://github.com/Alisina10/database.git
+Final project is in my groupmate's repository: https://github.com/Alisina10/database.git
 
+Video presentation of final project in this repository. 
 
 
